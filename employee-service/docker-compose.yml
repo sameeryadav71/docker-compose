@@ -1,0 +1,26 @@
+version: '3.2'
+
+services:
+    web:
+        image: employee-service:latest
+        build: .
+        depends_on: 
+            - db
+        ports:
+            - 8080:8080
+        restart: always
+        
+    db:
+        image: postgres:latest
+        ports:
+            - 5432:5432
+        restart: always
+        environment:
+            POSTGRES_PASSWORD: postgres
+        volumes:
+            - type: volume
+              source: pgdata
+              target: /var/lib/postgresql/data
+
+volumes:
+  pgdata:
